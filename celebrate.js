@@ -24,16 +24,25 @@ const sounds = {
     wow: document.getElementById('sfx-wow')
 };
 
-// --- VOLUME CALIBRATION ---
-sounds.piano.volume = 0.3;       // Lowered background
-sounds.hbd.volume = 0.3;         // Matches background
-sounds.door.volume = 1.0;        // Loud reaction
-sounds.firecrackers.volume = 0.8;
+// Volume
+sounds.piano.volume = 0.3;
+sounds.hbd.volume = 0.3;
 Object.keys(sounds).forEach(key => {
-    if (!['piano', 'hbd'].includes(key)) sounds[key].volume = 1.0; 
+    if (!['piano', 'hbd'].includes(key)) sounds[key].volume = 1.0;
 });
 
-function nextStep() {
+// Play SFX naturally (No 2-second limiter)
+function playSfx(sfx) {
+    if (!sfx) return;
+    sfx.currentTime = 0;
+    sfx.play();
+}
+
+function nextStep(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     step++;
 
     if (step === 1) {
@@ -45,36 +54,28 @@ function nextStep() {
             document.getElementById('viewport').classList.add('lit-up');
         });
     } else if (step === 3) {
-        playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg", () => {
-            setInterval(createFloatingElement, 500);
-        });
+        playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg");
     } else if (step === 4) {
         playTransition(sounds.cap, "You look wonderful! ❤️", "Bring the Cake 🎂", "with_cap.jpg");
     } else if (step === 5) {
-        // Sound added for bringing the cake
         playTransition(sounds.cake, "A treat for you! 🎂", "Light the Candles 🕯️", "cake_static.jpg");
     } else if (step === 6) {
         playTransition(sounds.match, "Make a wish... 🌬️", "Blow them out!", "cake_lit.jpg");
     } else if (step === 7) {
-        actionBox.style.display = 'none';
+        actionBox.style.visibility = 'hidden';
         sounds.piano.pause();
         
-        // Firecrackers (4s)
-        sounds.firecrackers.currentTime = 0;
         sounds.firecrackers.play();
         const fcInterval = setInterval(createFirecrackerEffect, 150);
         setTimeout(() => { clearInterval(fcInterval); sounds.firecrackers.pause(); }, 4000);
 
-        // HBD (13s)
-        sounds.hbd.currentTime = 0;
         sounds.hbd.play();
-
         setTimeout(() => {
             gsap.to(sounds.hbd, { volume: 0, duration: 2, onComplete: () => {
                 sounds.hbd.pause();
                 sounds.hbd.volume = 0.3;
                 sounds.piano.play();
-                actionBox.style.display = 'flex';
+                actionBox.style.visibility = 'visible';
             }});
         }, 13000);
 
@@ -84,34 +85,36 @@ function nextStep() {
     } else if (step === 9) {
         playTransition(sounds.splat, "Oops! Messy birthday! 😂", "Let's eat! 🍰", "messy_face.jpg");
     } else if (step === 10) {
-        // Sound added for final surprise preparation
         playTransition(sounds.eating, "Yum! So sweet! 💖", "The Final Surprise 🎁", "eating_finished.jpg");
     } else if (step === 11) {
-        // Sound for opening the final surprise box
         playTransition(sounds.surprise, "One more thing for you...", "Open the Box 📦", "box_closed.jpg");
     } else if (step === 12) {
         playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
             actionBox.style.display = 'none'; 
-            smileBox.style.display = 'block'; 
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            smileBox.style.display = 'flex'; 
+            confetti({ particleCount: 200, spread: 100 });
         });
     }
 }
 
-function triggerWow() {
-    sounds.wow.currentTime = 0;
-    sounds.wow.play();
-    confetti({ particleCount: 100, spread: 50 });
-}
-
 function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
-    if (sfx) { sfx.currentTime = 0; sfx.play(); }
+    if (sfx) playSfx(sfx);
     gsap.to(media, { opacity: 0, duration: 0.8, onComplete: () => {
         media.src = nextImg;
         topText.textContent = nextTopText;
         btnText.textContent = nextBtnText;
         gsap.to(media, { opacity: 1, duration: 0.8, onComplete: () => { if (callback) callback(); } });
     }});
+}
+
+function triggerWow(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    sounds.wow.currentTime = 0;
+    sounds.wow.play();
+    confetti({ particleCount: 150, spread: 60 });
 }
 
 function createFirecrackerEffect() {
@@ -129,15 +132,6 @@ function createFirecrackerEffect() {
     gsap.to(cracker, { x:(window.innerWidth/2)-x, y:(window.innerHeight/2)-y, rotation:720, duration:0.8, onComplete:()=>{
         cracker.textContent='💥'; gsap.to(cracker,{scale:2, opacity:0, duration:0.3, onComplete:()=>cracker.remove()});
     }});
-}
-
-function createFloatingElement() {
-    const el = document.createElement('div');
-    el.className = 'floating';
-    el.style.cssText = `left:${Math.random()*100}vw; top:100vh; font-size:25px;`;
-    el.textContent = ['🌸','✨','💖','🦋','🎈'][Math.floor(Math.random()*5)];
-    document.body.appendChild(el);
-    gsap.to(el, { y:-window.innerHeight-100, duration:6, opacity:0, onComplete:()=>el.remove() });
 }
 
 document.addEventListener('mousemove', (e) => {
