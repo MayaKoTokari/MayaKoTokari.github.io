@@ -86,7 +86,7 @@ function nextStep(e) {
     else if (step === 12) {
         playTransition(sounds.empty, "Haha! It's empty! 😂", "Wait, I want a real gift! 🥺", "box_empty.png");
     } else if (step === 13) {
-        playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closedd.jpg");
+        playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closedd.png");
     } 
     // TROLL END
     else if (step === 14) {
