@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Commitment ✨</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="commitment.css">
+</head>
+<body>
+    <div class="custom-cursor">
+        <svg viewBox="0 0 24 24">
+            <path fill="#ff69b4" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </div>
+
+    <audio id="clap-sound" src="your-audio-file.mp3"></audio>
+
+    <div class="container">
+        <div id="main-content">
+            <h1>You have to promise me today, no excuses. 💯</h1>
+            <p class="subtitle">Are you ready to take action and give your best effort? 🔥</p>
+            <button class="shuffle-button" id="start-btn" onclick="startChallenge()">Are you ready to start now? ⚡</button>
+        </div>
+
+        <div id="choice-area" style="display: none;">
+            <button class="shuffle-button" onclick="sayYes()">Yes</button>
+            <button id="no-button" class="shuffle-button">No</button>
+        </div>
+
+        <div id="success-area" style="display: none;">
+            <h1 class="ending-text" style="opacity: 1; transform: none; font-size: 3rem;">I’m really proud of you for making this decision, it truly shows your strength and commitment ✨</h1>
+            <div style="display: flex; justify-content: center; margin-top: 2rem;">
+                <a href="celebrate.html" class="shuffle-button" style="text-decoration: none;">Let's celebrate your birthday 🎂</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="commitment.js"></script>
+</body>
+</html>

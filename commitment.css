@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@700&family=Quicksand:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #ffe6e6, #e6e6ff, #ffebf5);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    font-family: 'Comic Neue', cursive;
+    font-size: 3.5rem;
+    color: #ff69b4;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    color: #8a2be2;
+    margin-bottom: 2rem;
+}
+
+/* Button style from cause.css */
+.shuffle-button {
+    background: linear-gradient(45deg, #ff69b4, #ff99cc);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    padding: 1.2rem 2.5rem;
+    font-size: 1.3rem;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    cursor: none;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+#choice-area {
+    display: none;
+    justify-content: center;
+    gap: 30px;
+}
+
+#no-button {
+    position: relative;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+}
+
+/* Floating Elements Styling */
+.floating {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 1.5rem;
+}
+
+/* Firework Particles */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
