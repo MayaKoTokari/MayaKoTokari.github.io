@@ -31,7 +31,6 @@ Object.keys(sounds).forEach(key => {
     if (!['piano', 'hbd'].includes(key)) sounds[key].volume = 1.0;
 });
 
-// Play SFX naturally (No 2-second limiter)
 function playSfx(sfx) {
     if (!sfx) return;
     sfx.currentTime = 0;
@@ -39,10 +38,12 @@ function playSfx(sfx) {
 }
 
 function nextStep(e) {
+    // Prevent browser search/long-press behavior
     if (e) {
         e.preventDefault();
         e.stopPropagation();
     }
+    
     step++;
 
     if (step === 1) {
@@ -64,7 +65,6 @@ function nextStep(e) {
     } else if (step === 7) {
         actionBox.style.visibility = 'hidden';
         sounds.piano.pause();
-        
         sounds.firecrackers.play();
         const fcInterval = setInterval(createFirecrackerEffect, 150);
         setTimeout(() => { clearInterval(fcInterval); sounds.firecrackers.pause(); }, 4000);
@@ -97,13 +97,24 @@ function nextStep(e) {
     }
 }
 
+// Fixed Transition logic to eliminate lag and flicker
 function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
     if (sfx) playSfx(sfx);
-    gsap.to(media, { opacity: 0, duration: 0.8, onComplete: () => {
+    
+    // 1. Slow fade out (1.0s)
+    gsap.to(media, { opacity: 0, duration: 1.0, onComplete: () => {
+        
+        // 2. Change content while invisible
         media.src = nextImg;
         topText.textContent = nextTopText;
         btnText.textContent = nextBtnText;
-        gsap.to(media, { opacity: 1, duration: 0.8, onComplete: () => { if (callback) callback(); } });
+        
+        // 3. Tiny delay to ensure browser registers the new image before fading back in
+        setTimeout(() => {
+            gsap.to(media, { opacity: 1, duration: 1.0, onComplete: () => { 
+                if (callback) callback(); 
+            }});
+        }, 50);
     }});
 }
 
