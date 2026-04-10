@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="celebrate.css">
 </head>
 <body class="initial-dark">
+    <div id="flying-zone"></div>
+
     <div class="custom-cursor">
         <svg viewBox="0 0 24 24">
             <path fill="#ff69b4" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -16,14 +18,19 @@
     </div>
 
     <div class="app-container">
-        <header><h1 id="top-text">Your story begins here... 🚪</h1></header>
+        <header>
+            <h1 id="top-text">Your story begins here... 🚪</h1>
+        </header>
+        
         <div class="media-viewport" id="viewport">
-            <img id="main-image" src="door_closed.jpg">
+            <img id="main-image" src="door_closed.jpg" alt="Surprise Viewport">
         </div>
+
         <footer class="controls">
             <div id="action-box" class="interactive-pill-button" onclick="nextStep(event)">
                 <div id="main-btn-text">Open the Door 🚪</div>
             </div>
+            
             <div id="final-wish-container" class="interactive-pill-button final-hidden" onclick="triggerWow(event)">
                 <div id="final-wish">Smile! Perfect ✨</div>
             </div>
@@ -32,6 +39,7 @@
 
     <audio id="bg-piano" src="soft-piano.mp3" loop></audio>
     <audio id="bg-hbd" src="happy-birthday.mp3" loop></audio>
+
     <audio id="sfx-firecrackers" src="firecrackers_sfx.mp3"></audio>
     <audio id="sfx-door" src="door_open_sfx.mp3"></audio>
     <audio id="sfx-light" src="light_switch_sfx.mp3"></audio>
@@ -48,6 +56,12 @@
     <audio id="sfx-teddy" src="teddy_reveal_sfx.mp3"></audio>
     <audio id="sfx-gift" src="gift_unwrap_sfx.mp3"></audio>
     <audio id="sfx-wow" src="wow_sfx.mp3"></audio>
+
+    <audio id="sfx-balloon-burst" src="balloon_burst.mp3"></audio>
+    <audio id="sfx-laugh" src="laugh.mp3"></audio>
+    <audio id="sfx-wow-emoji" src="wow_emoji.mp3"></audio>
+    <audio id="sfx-party-emoji" src="party_emoji.mp3"></audio>
+    <audio id="sfx-love-emoji" src="love_emoji.mp3"></audio>
 
     <script src="celebrate.js"></script>
 </body>
