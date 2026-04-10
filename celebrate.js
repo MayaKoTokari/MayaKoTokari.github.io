@@ -57,7 +57,7 @@ function nextStep(e) {
     } else if (step === 3) {
         playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg");
     } else if (step === 4) {
-        playTransition(sounds.cap, "You look wonderful! ❤️", "Bring the Cake 🎂", "with_cap.jpg");
+        playTransition(sounds.cap, "You look wonderful! ❤️", "Bring Me Cake 🎂", "with_cap.jpg");
     } else if (step === 5) {
         playTransition(sounds.cake, "A treat for you! 🎂", "Light the Candles 🕯️", "cake_static.jpg");
     } else if (step === 6) {
@@ -85,9 +85,9 @@ function nextStep(e) {
     } else if (step === 9) {
         playTransition(sounds.splat, "Oops! Messy birthday! 😂", "Let's eat! 🍰", "messy_face.jpg");
     } else if (step === 10) {
-        playTransition(sounds.eating, "Yum! So sweet! 💖", "The Final Surprise 🎁", "eating_finished.jpg");
+        playTransition(sounds.eating, "Yum! So sweet! 💖", "My Gift 🎁", "eating_finished.jpg");
     } else if (step === 11) {
-        playTransition(sounds.surprise, "One more thing for you...", "Open the Box 📦", "box_closed.jpg");
+        playTransition(sounds.surprise, "Ooh, what is this? 🤩✨", "Open the Box 📦", "box_closed.jpg");
     } else if (step === 12) {
         playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
             actionBox.style.display = 'none'; 
