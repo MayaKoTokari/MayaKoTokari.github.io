@@ -1,3 +1,16 @@
+// Preload all story images to prevent lag during transitions
+const storyImages = [
+    "door_closed.jpg", "room_dark.jpg", "room_lit.jpg", 
+    "party_scene.jpg", "with_cap.jpg", "cake_static.jpg", 
+    "cake_lit.jpg", "cake_blown.jpg", "cake_cut.jpg", 
+    "messy_face.jpg", "eating_finished.jpg", "box_closed.jpg", 
+    "box_empty.png", "box_closedd.png", "gift_inside.jpg"
+];
+
+storyImages.forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
 let step = 0;
 const media = document.getElementById('main-image');
 const actionBox = document.getElementById('action-box');
