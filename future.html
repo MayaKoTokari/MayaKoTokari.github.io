@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Beautiful Memories ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg,
+                    #ffd1dc 0%,
+                    #e6e6fa 25%,
+                    #ffefd5 50%,
+                    #e6e6fa 75%,
+                    #ffd1dc 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            color: #4a4a4a;
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Enhanced Sparkle Effect */
+        .magic-sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: white;
+            animation: twinkle var(--duration, 4s) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        /* Generate 50 sparkles with different positions and animations */
+        .magic-sparkles::before,
+        .magic-sparkles::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: sparkleLayer 8s linear infinite;
+            opacity: 0.5;
+        }
+
+        .magic-sparkles::after {
+            animation-delay: -4s;
+            transform: rotate(45deg);
+        }
+
+        @keyframes sparkleLayer {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50px);
+            }
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 105, 180, 0.6);
+            animation: floatHeart var(--float-duration, 6s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(var(--translate-x, 0), -100vh) rotate(360deg);
+            }
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .welcome h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInScale 2s ease;
+        }
+
+        .welcome p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1.5rem auto;
+            line-height: 1.6;
+            animation: fadeIn 2s ease 0.5s both;
+        }
+
+        /* Enhanced Memory Cards */
+        .memory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            z-index: 3;
+            position: relative;
+        }
+
+        .memory-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .memory-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+        }
+
+        .memory-card:hover .memory-img {
+            transform: scale(1.05);
+        }
+
+        .memory-date {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .memory-caption {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        /* Final Message Section */
+        .final-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .final-message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #ff69b4;
+            margin-bottom: 2rem;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .final-message p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .goodbye-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .goodbye-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Generate Hearts */
+        .js-generate-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff69b4, #da70d6);
+            border-radius: 6px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome h1 {
+                font-size: 3rem;
+            }
+
+            .memory-container {
+                grid-template-columns: 1fr;
+            }
+
+            .final-message h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="magic-sparkles"></div>
+    <div class="floating-hearts">
+        <!-- Hearts will be generated via CSS -->
+        <div class="heart" style="--float-duration: 6s; --delay: 0s; --translate-x: 20px;">💝</div>
+        <div class="heart" style="--float-duration: 8s; --delay: 1s; --translate-x: -30px;">💖</div>
+        <div class="heart" style="--float-duration: 7s; --delay: 2s; --translate-x: 40px;">💗</div>
+        <div class="heart" style="--float-duration: 9s; --delay: 3s; --translate-x: -20px;">💓</div>
+        <div class="heart" style="--float-duration: 5s; --delay: 4s; --translate-x: 30px;">💕</div>
+    </div>
+
+    <section class="welcome">
+        <h1>THE FUTURE ARCHIVE: VIPANAA KOIRALAA — 2036</h1>
+        <p>An archive entry documenting the journey of a woman who refused to stay ordinary and chose to build a life of purpose, courage, and impact.</p>
+    </section>
+
+    <section class="welcome">
+        <h1>The Journey Ahead</h1>
+        <p>Some timelines are followed, others are quietly built step by step, decision by decision.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d11.png" alt="2026 Shift Begins" class="memory-img">
+            <div class="memory-date">🌱 2026 — The Shift Begins</div>
+            <div class="memory-caption">
+                This was the year I stopped waiting for clarity, permission, or the perfect moment
+                and chose to begin anyway. It wasn’t about certainty, it was about courage.
+                The quiet decision to take myself seriously marked the start of everything that followed.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d12.png" alt="2028 Recognition" class="memory-img">
+            <div class="memory-date">🌿 2028 — Recognition Without Noise</div>
+            <div class="memory-caption">
+                Without chasing attention, my consistency began to speak. 
+                What I built, how I worked, and the way I showed up started getting noticed—
+                not loudly, but in a way that felt real, earned, and impossible to overlook.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d13.png" alt="2030 Turning Point" class="memory-img">
+            <div class="memory-date">🚀 2030 — The Turning Point</div>
+            <div class="memory-caption">
+                This was where I left comfort behind. I made decisions that most hesitate to make
+                stepping into uncertainty with intention. The risks I took here didn’t just create change,
+                they reshaped the direction of my entire journey.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d14.png" alt="2033 Impact" class="memory-img">
+            <div class="memory-date">🌍 2033 — Impact Takes Shape</div>
+            <div class="memory-caption">
+                What began as ideas slowly turned into meaningful outcomes. 
+                It was no longer about my personal growth alone, it became about creating value,
+                influencing lives, and building something that extended far beyond me.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d15.png" alt="2036 Leadership" class="memory-img">
+            <div class="memory-date">👑 2036 — Leadership Redefined</div>
+            <div class="memory-caption">
+                Leadership here was not just a title or position, it became responsibility, influence, and trust.
+                I grew into someone people look up to, not because I sought it,
+                but because I consistently proved I could carry it with purpose and integrity.
+            </div>
+        </div> 
+    </div>   
+
+    <section class="welcome">
+        <h1>Ventures That Solve Real Problems</h1>
+        <p>  These are not random businesses.  
+        They are structured solutions I built to solve real-world problems,
+        across health, food, sustainability, and human development.  
+        Each venture stands on its own, yet connects as part of a larger ecosystem.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d21.png" alt="Divine Dish International" class="memory-img">
+            <div class="memory-date"> Divine Dish International</div>
+            <div class="memory-caption">
+                I built a global wellness hotel where healthy food, yoga, and mindfulness come together,
+                creating a space where people don’t just stay, they truly heal and reset.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d22.png" alt="HerbaNova" class="memory-img">
+            <div class="memory-date"> HerbaNova</div>
+            <div class="memory-caption">
+                I created herbal products focused on everyday wellness,
+                helping people choose natural, long-term health over quick chemical fixes.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d23.png" alt="GreenCart Collective" class="memory-img">
+            <div class="memory-date">GreenCart Collective</div>
+            <div class="memory-caption">
+                I built a platform connecting local farmers with conscious consumers,
+                making organic living simple and accessible.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d24.png" alt="SoulBite Café" class="memory-img">
+            <div class="memory-date"> SoulBite Café</div>
+            <div class="memory-caption">
+                I designed a space where food is not just eaten, but understood,
+                blending taste, nutrition, and mindful living.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d25.png" alt="Learnscape Journeys" class="memory-img">
+            <div class="memory-date"> Learnscape Journeys</div>
+            <div class="memory-caption">
+                I combined learning with travel,
+                creating experiences that transform people beyond classrooms.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d26.png" alt="EcoVista Experiences" class="memory-img">
+            <div class="memory-date"> EcoVista Experiences</div>
+            <div class="memory-caption">
+                I built tourism experiences that respect nature and culture,
+                where exploration benefits both travelers and communities.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d27.png" alt="Sacred Trails Travel" class="memory-img">
+            <div class="memory-date"> Sacred Trails Travel Co.</div>
+            <div class="memory-caption">
+                I created complete travel experiences from airport pickup to spiritual journeys,
+                so visitors can explore without worrying about anything.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d28.png" alt="Basket of Love" class="memory-img">
+            <div class="memory-date"> Basket of Love</div>
+            <div class="memory-caption">
+                I built a gifting brand where every product carries meaning,
+                focused on wellness, care, and thoughtful connection.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d29.png" alt="EcoWear" class="memory-img">
+            <div class="memory-date"> EcoWear</div>
+            <div class="memory-caption">
+                I launched a sustainable clothing brand,
+                proving style and responsibility can exist together.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d30.png" alt="EcoFit Creations" class="memory-img">
+            <div class="memory-date"> EcoFit Creations</div>
+            <div class="memory-caption">
+                I turned waste into value,
+                creating beautiful products from recycled and renewable materials.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d31.png" alt="GreenPack Solutions" class="memory-img">
+            <div class="memory-date"> GreenPack Solutions</div>
+            <div class="memory-caption">
+                I built sustainable packaging solutions
+                helping businesses move away from harmful materials.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d32.png" alt="Nursery Network" class="memory-img">
+            <div class="memory-date"> National Nursery Network</div>
+            <div class="memory-caption">
+                I created a nationwide plant ecosystem
+                producing locally and exporting globally.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d33.png" alt="Hydropower" class="memory-img">
+            <div class="memory-date"> Divine Hydropower Limited</div>
+            <div class="memory-caption">
+                I invested in clean energy
+                contributing to long-term sustainable power solutions.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d34.png" alt="Finance Company" class="memory-img">
+            <div class="memory-date"> FutureFund Finance</div>
+            <div class="memory-caption">
+                I built a finance platform that supports students and startups,
+                based on potential, not just collateral.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d35.png" alt="TerraImpact" class="memory-img">
+            <div class="memory-date"> TerraImpact</div>
+            <div class="memory-caption">
+                I led sustainability and social initiatives,
+                ensuring growth always creates real impact.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d36.png" alt="Investments" class="memory-img">
+            <div class="memory-date"> Divine Investment Banking</div>
+            <div class="memory-caption">
+                I invest in ideas early,
+                supporting businesses that have the power to create meaningful change.
+            </div>
+        </div>          
+    </div>
+
+    <section class="welcome">
+        <h1>Growing Into Leadership</h1>
+        <p>Leadership was never something I chased, it was something I grew into, step by step. It began with learning how to contribute, evolved into taking responsibility, and eventually became about influencing decisions that affect others. With every role, I didn’t just gain recognition, I gained perspective, accountability, and the ability to create real impact.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d41.png" alt="NYEF Leadership" class="memory-img">
+            <div class="memory-date"> Nepalese Young Entrepreneurs' Forum (NYEF)</div>
+            <div class="memory-caption">
+                I grew through leadership roles within NYEF, actively contributing to youth entrepreneurship initiatives,
+                building networks, and leading programs that support emerging entrepreneurs across the country.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d42.png" alt="FNCCI Leadership" class="memory-img">
+            <div class="memory-date"> Federation of Nepalese Chambers of Commerce & Industry (FNCCI)</div>
+            <div class="memory-caption">
+                I stepped into national-level leadership, contributing to business policy discussions and representing
+                the voice of young entrepreneurs in Nepal’s largest business network.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d43.png" alt="Government Advisor" class="memory-img">
+            <div class="memory-date"> Advisor to Government of Nepal</div>
+            <div class="memory-caption">
+                I contributed to policy-level thinking in areas of entrepreneurship, tourism, and sustainable development—
+                helping bridge the gap between innovation and national progress.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d44.png" alt="UN Collaboration" class="memory-img">
+            <div class="memory-date"> United Nations Youth & Development Programs</div>
+            <div class="memory-caption">
+                I collaborated on global initiatives focused on sustainability and youth empowerment,
+                contributing ideas and actions aligned with international development goals.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d45.png" alt="WEF Recognition" class="memory-img">
+            <div class="memory-date"> World Economic Forum (Young Global Leaders Network)</div>
+            <div class="memory-caption">
+                I was recognized among emerging global leaders, engaging in discussions that shape
+                the future of industries, economies, and sustainable growth.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d46.png" alt="Global Speaker" class="memory-img">
+            <div class="memory-date">International Speaker & Panelist</div>
+            <div class="memory-caption">
+                I shared my ideas on global platforms—speaking about entrepreneurship, sustainability,
+                and innovation in front of diverse international audiences.
+            </div>
+        </div>
+    </div>
+
+    <section class="welcome">
+        <h1>A Voice That Traveled Beyond Borders</h1>
+        <p>What started as ideas slowly found their way into larger conversations. I didn’t speak to be heard, I spoke because I had something meaningful to say. Over time, those thoughts reached platforms that connected me to audiences far beyond where I began.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d51.png" alt="CNN Interview" class="memory-img">
+            <div class="memory-date"> CNN International</div>
+            <div class="memory-caption">
+                I shared my perspective on entrepreneurship and purpose-driven work,
+                discussing how ideas can evolve into impactful systems.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d52.png" alt="BBC Feature" class="memory-img">
+            <div class="memory-date"> BBC World News</div>
+            <div class="memory-caption">
+                I was featured for my journey and work, highlighting how consistent effort
+                and clear vision can create meaningful change.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d53.png" alt="CNBC Talk" class="memory-img">
+            <div class="memory-date"> CNBC Global</div>
+            <div class="memory-caption">
+                I spoke about business, growth, and long-term thinking—
+                focusing on building systems that go beyond short-term success.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d54.png" alt="Al Jazeera Panel" class="memory-img">
+            <div class="memory-date">Al Jazeera Panel</div>
+            <div class="memory-caption">
+                I joined global discussions on sustainability and innovation,
+                contributing ideas that connect business with responsibility.
+            </div>
+        </div>
+
+     </div>
+
+
+    <section class="welcome">
+        <h1>When My Story Became Headlines</h1>
+        <p>I never started for attention but over time, the work spoke louder than I expected. What I was building quietly began to appear in places I once only read. My journey didn’t just grow, it started getting documented.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d61.png" alt="New York Times Feature" class="memory-img">
+            <div class="memory-date">The New York Times</div>
+            <div class="memory-caption">
+                “A New Generation of Entrepreneurs Redefining Impact”
+                — A feature highlighting how I’m building ventures focused on purpose and sustainability.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d62.png" alt="The Guardian Feature" class="memory-img">
+            <div class="memory-date">The Guardian</div>
+            <div class="memory-caption">
+                “From Local Roots to Global Vision”
+                — A story covering my journey of turning ideas into systems that create real change.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d63.png" alt="Forbes Feature" class="memory-img">
+            <div class="memory-date">Forbes</div>
+            <div class="memory-caption">
+                “Young Founder Building an Ecosystem of Impact”
+                — Recognizing my work across multiple industries and long-term vision.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d64.png" alt="The Economist Feature" class="memory-img">
+            <div class="memory-date">The Economist</div>
+            <div class="memory-caption">
+                “The Rise of Purpose-Driven Business Models”
+                — Featuring my approach to combining business with sustainability and responsibility.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d65.png" alt="Himalayan Times Feature" class="memory-img">
+            <div class="memory-date">The Himalayan Times</div>
+            <div class="memory-caption">
+                “A Nepali Entrepreneur to Watch”
+                — Showcasing my contributions to business, tourism, and youth innovation in Nepal.
+            </div>
+        </div>
+    </div>
+
+    <section class="welcome">
+        <h1>Recognized Where It Matters</h1>
+        <p>I never built anything for recognition, but along the way, the work began to speak for itself. These weren’t just awards, they were moments that reflected the impact I was creating.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d71.png" alt="Forbes 30 Under 30" class="memory-img">
+            <div class="memory-date">Forbes 30 Under 30 Asia</div>
+            <div class="memory-caption">
+                I was recognized among young leaders building impactful ventures—
+                for creating solutions that combine business with purpose.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d72.png" alt="Most Powerful Women" class="memory-img">
+            <div class="memory-date">Forbes 100 Most Powerful Women (Emerging Leaders)</div>
+            <div class="memory-caption">
+                I was featured among emerging women leaders—
+                reflecting my growing influence across industries and impact-driven work.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d73.png" alt="WEF Recognition" class="memory-img">
+            <div class="memory-date">World Economic Forum – Young Global Leaders</div>
+            <div class="memory-caption">
+                I was selected into a global network of leaders shaping the future—
+                contributing to conversations on innovation and sustainability.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d74.png" alt="UN Recognition" class="memory-img">
+            <div class="memory-date">United Nations Recognition for Sustainable Impact</div>
+            <div class="memory-caption">
+                My work was acknowledged for contributing to sustainable development—
+                aligning business growth with global responsibility.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d75.png" alt="Asian Leadership Award" class="memory-img">
+            <div class="memory-date">Asia Leadership Awards</div>
+            <div class="memory-caption">
+                I was honored for leadership in building purpose-driven ventures—
+                creating impact across multiple sectors.
+            </div>
+        </div>
+    </div>
+
+
+    <section class="welcome">
+        <h1>Impact, Measured Beyond Numbers</h1>
+        <p>Numbers only tell a part of the story, behind each one is effort, consistency, and people whose lives were touched along the way. What started small gradually expanded, into systems, teams, and impact that reached far beyond what I first imagined.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d81.jpg" alt="Ventures Built" class="memory-img">
+            <div class="memory-date">🚀 15+ Ventures Built</div>
+            <div class="memory-caption">
+                I built and scaled ventures across multiple industries—
+                each solving real problems and contributing to a larger ecosystem.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d82.jpg" alt="Global Presence" class="memory-img">
+            <div class="memory-date">🌍 Presence in 20+ Countries</div>
+            <div class="memory-caption">
+                What started locally expanded globally—
+                reaching markets, communities, and collaborations across borders.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d83.jpg" alt="Employees" class="memory-img">
+            <div class="memory-date">👥 20,000+ People Employed</div>
+            <div class="memory-caption">
+                I created opportunities at scale—
+                building teams that drive growth, innovation, and shared success.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d84.jpg" alt="Lives Impacted" class="memory-img">
+            <div class="memory-date">❤️ 1M+ Lives Impacted</div>
+            <div class="memory-caption">
+                Through products, services, and initiatives,
+                my work reached and improved lives in meaningful ways.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d85.jpg" alt="Collaborations" class="memory-img">
+            <div class="memory-date">🤝 50+ Strategic Collaborations</div>
+            <div class="memory-caption">
+                I worked with organizations, institutions, and global partners—
+                creating stronger and more impactful outcomes together.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d86.jpg" alt="Industries" class="memory-img">
+            <div class="memory-date">🏭 8+ Industries Influenced</div>
+            <div class="memory-caption">
+                From wellness and food to tourism, sustainability, and finance—
+                I built across sectors that shape everyday life.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d87.jpg" alt="Investments" class="memory-img">
+            <div class="memory-date">📈 30+ Early-Stage Investments</div>
+            <div class="memory-caption">
+                I supported emerging businesses at early stages—
+                helping ideas grow into impactful ventures.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d88.jpg" alt="Community Impact" class="memory-img">
+            <div class="memory-date">🌱 100+ Community Initiatives</div>
+            <div class="memory-caption">
+                I led and supported initiatives focused on sustainability,
+                social impact, and community development.
+            </div>
+        </div>
+    </div>
+
+ <section class="welcome">
+        <h1>Built With Purpose, Not Just Profit</h1>
+        <p>Not everything I built was meant to scale, some things were meant to care. Beyond business, I felt a responsibility to create spaces where people and lives are protected, supported, and valued. This is the part of my work that isn’t measured by revenue but by the difference it makes.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d97.jpg" alt="We Spark Society" class="memory-img">
+            <div class="memory-date">✨ We Spark Society</div>
+            <div class="memory-caption">
+                I founded We Spark Society to empower children and youth creating opportunities through education, mentorship, and skill development,
+                helping them discover their potential and build a stronger future.
+            </div>
+        </div>
+        <div class="memory-card">
+            <img src="./d91.jpg" alt="Animal Shelter" class="memory-img">
+            <div class="memory-date">🐕 Street Haven Initiative</div>
+            <div class="memory-caption">
+                I created a safe space for street animals
+                focusing on rescue, treatment, and giving them a life with dignity and care.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d92.png" alt="Old Age Home" class="memory-img">
+            <div class="memory-date">👵 Golden Years Home</div>
+            <div class="memory-caption">
+                I built a home where the elderly are not forgotten
+                a place filled with care, respect, and emotional support.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d93.jpg" alt="Free School" class="memory-img">
+            <div class="memory-date">🎓 Open Wings School</div>
+            <div class="memory-caption">
+                I created access to free education for orphan and differently-abled children
+                giving them opportunities to learn, grow, and build their future.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d94.jpg" alt="Women Empowerment" class="memory-img">
+            <div class="memory-date">👩 Women Empowerment Programs</div>
+            <div class="memory-caption">
+                I supported women through skill development and opportunities
+                helping them become financially independent and confident.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d95.jpg" alt="Rural Development" class="memory-img">
+            <div class="memory-date">🌾 Rural Upliftment Projects</div>
+            <div class="memory-caption">
+                I worked with rural communities—
+                improving livelihoods through agriculture, training, and local business support.
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <img src="./d96.jpg" alt="Health Camps" class="memory-img">
+            <div class="memory-date">🏥 Free Health & Wellness Camps</div>
+            <div class="memory-caption">
+                I organized health and wellness programs
+                making basic care accessible to those who need it the most.
+            </div>
+        </div>
+    </div>
+
+    <section class="final-message">
+        <h2>Message From The Future</h2>
+        <p>If you are reading this, it means you kept moving forward even on the days when the path felt uncertain. ✨<br>
+        There were moments when doubts tried to grow louder than your dreams,<br>
+        but somehow, you chose courage over fear and progress over comfort.<br>
+        Each challenge you faced quietly shaped the strength you carry today. 🌱</p>
+
+        <p>Remember this whenever the journey feels heavy: every small step you take is building a future worth being proud of.<br>
+        Keep believing in the vision inside you, keep trusting your growth,<br>
+        and keep walking forward with the same determination that brought you this far. <br>
+        The most beautiful chapters of your story are still waiting to unfold. 🌟</p>
+         <p>This Is Not a Prediction, This is a direction. The future is not written yet. But if anyone can build it, it is you.</p>
+
+        <a href="commitment.html" class="goodbye-btn">Are you fully committed to making this happen? 🚀</a>
+
+
+
+    </section>
+</body>
+
+</html>
