@@ -20,11 +20,13 @@ const sounds = {
     splat: document.getElementById('sfx-splat'),
     eating: document.getElementById('sfx-eating'),
     surprise: document.getElementById('sfx-surprise'),
+    empty: document.getElementById('sfx-empty'),
+    teddy: document.getElementById('sfx-teddy'),
     gift: document.getElementById('sfx-gift'),
     wow: document.getElementById('sfx-wow')
 };
 
-// Volume
+// Volume Setup
 sounds.piano.volume = 0.3;
 sounds.hbd.volume = 0.3;
 Object.keys(sounds).forEach(key => {
@@ -38,12 +40,7 @@ function playSfx(sfx) {
 }
 
 function nextStep(e) {
-    // Prevent browser search/long-press behavior
-    if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    
+    if (e) { e.preventDefault(); e.stopPropagation(); }
     step++;
 
     if (step === 1) {
@@ -57,7 +54,7 @@ function nextStep(e) {
     } else if (step === 3) {
         playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg");
     } else if (step === 4) {
-        playTransition(sounds.cap, "You look wonderful! ❤️", "Bring Me Cake 🎂", "with_cap.jpg");
+        playTransition(sounds.cap, "You look wonderful! ❤️", "Bring the Cake 🎂", "with_cap.jpg");
     } else if (step === 5) {
         playTransition(sounds.cake, "A treat for you! 🎂", "Light the Candles 🕯️", "cake_static.jpg");
     } else if (step === 6) {
@@ -68,28 +65,32 @@ function nextStep(e) {
         sounds.firecrackers.play();
         const fcInterval = setInterval(createFirecrackerEffect, 150);
         setTimeout(() => { clearInterval(fcInterval); sounds.firecrackers.pause(); }, 4000);
-
         sounds.hbd.play();
         setTimeout(() => {
             gsap.to(sounds.hbd, { volume: 0, duration: 2, onComplete: () => {
-                sounds.hbd.pause();
-                sounds.hbd.volume = 0.3;
-                sounds.piano.play();
-                actionBox.style.visibility = 'visible';
+                sounds.hbd.pause(); sounds.hbd.volume = 0.3;
+                sounds.piano.play(); actionBox.style.visibility = 'visible';
             }});
         }, 13000);
-
         playTransition(sounds.blowing, "Wish granted! ✨", "Cut the Cake 🔪", "cake_blown.jpg");
     } else if (step === 8) {
         playTransition(sounds.cutting, "Time for cake! 🍰", "Wait, what's that? 😈", "cake_cut.jpg");
     } else if (step === 9) {
         playTransition(sounds.splat, "Oops! Messy birthday! 😂", "Let's eat! 🍰", "messy_face.jpg");
     } else if (step === 10) {
-        playTransition(sounds.eating, "Yum! So sweet! 💖", "My Gift 🎁", "eating_finished.jpg");
+        playTransition(sounds.eating, "Yum! So sweet! 💖", "The Final Surprise 🎁", "eating_finished.jpg");
     } else if (step === 11) {
-        playTransition(sounds.surprise, "Ooh, what is this? 🤩✨", "Open the Box 📦", "box_closed.jpg");
-    } else if (step === 12) {
-        playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
+        playTransition(sounds.surprise, "One more thing for you...", "Open the Box 📦", "box_closed.jpg");
+    } 
+    // TROLL START
+    else if (step === 12) {
+        playTransition(sounds.empty, "Haha! It's empty! 😂", "Wait, I want a real gift! 🥺", "box_empty.jpg");
+    } else if (step === 13) {
+        playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closed.jpg");
+    } 
+    // TROLL END
+    else if (step === 14) {
+        playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside_teddy.jpg", () => {
             actionBox.style.display = 'none'; 
             smileBox.style.display = 'flex'; 
             confetti({ particleCount: 200, spread: 100 });
@@ -97,19 +98,12 @@ function nextStep(e) {
     }
 }
 
-// Fixed Transition logic to eliminate lag and flicker
 function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
     if (sfx) playSfx(sfx);
-    
-    // 1. Slow fade out (1.0s)
     gsap.to(media, { opacity: 0, duration: 1.0, onComplete: () => {
-        
-        // 2. Change content while invisible
         media.src = nextImg;
         topText.textContent = nextTopText;
         btnText.textContent = nextBtnText;
-        
-        // 3. Tiny delay to ensure browser registers the new image before fading back in
         setTimeout(() => {
             gsap.to(media, { opacity: 1, duration: 1.0, onComplete: () => { 
                 if (callback) callback(); 
@@ -119,10 +113,7 @@ function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
 }
 
 function triggerWow(e) {
-    if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
+    if (e) { e.preventDefault(); e.stopPropagation(); }
     sounds.wow.currentTime = 0;
     sounds.wow.play();
     confetti({ particleCount: 150, spread: 60 });
