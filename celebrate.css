@@ -46,16 +46,16 @@ h1 {
     width: 80vw;
     max-width: 340px;
     aspect-ratio: 4 / 5; 
-    background: #000;
+    background: #000; /* Solid background prevents flickering during swap */
     border-radius: 30px;
     border: 4px solid #333;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    will-change: opacity;
 }
 
 .media-viewport.lit-up {
     border-color: #ff69b4;
-    background: #fff;
 }
 
 .media-viewport img { width: 100%; height: 100%; object-fit: cover; }
@@ -66,13 +66,13 @@ h1 {
     padding: 16px 40px;
     min-width: 260px;
     display: flex;
-    justify-content: center; /* Centered Text */
-    align-items: center;     /* Centered Text */
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
     text-align: center;
     box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
     border: none;
     
-    /* Anti-Selection/Search Fix */
+    /* PREVENT GOOGLE SEARCH & SELECTION */
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
@@ -83,7 +83,7 @@ h1 {
     color: #fff;
     font-weight: 700;
     font-size: 1.2rem;
-    pointer-events: none;
+    pointer-events: none; /* Let the click go through to the parent div */
 }
 
 .final-hidden { display: none; }
