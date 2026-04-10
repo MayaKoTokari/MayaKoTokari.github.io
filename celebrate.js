@@ -5,6 +5,7 @@ const btnText = document.getElementById('main-btn-text');
 const topText = document.getElementById('top-text');
 const smileBox = document.getElementById('final-wish-container');
 
+// --- AUDIO CONFIGURATION ---
 const sounds = {
     piano: document.getElementById('bg-piano'),
     hbd: document.getElementById('bg-hbd'),
@@ -23,20 +24,120 @@ const sounds = {
     empty: document.getElementById('sfx-empty'),
     teddy: document.getElementById('sfx-teddy'),
     gift: document.getElementById('sfx-gift'),
-    wow: document.getElementById('sfx-wow')
+    wow: document.getElementById('sfx-wow'),
+    // New Flying System SFX
+    balloonBurst: document.getElementById('sfx-balloon-burst'),
+    laugh: document.getElementById('sfx-laugh'),
+    wowEmoji: document.getElementById('sfx-wow-emoji'),
+    partyEmoji: document.getElementById('sfx-party-emoji'),
+    loveEmoji: document.getElementById('sfx-love-emoji')
 };
 
 // Volume Setup
 sounds.piano.volume = 0.3;
 sounds.hbd.volume = 0.3;
-Object.keys(sounds).forEach(key => {
-    if (!['piano', 'hbd'].includes(key)) sounds[key].volume = 1.0;
-});
+
+// --- REFINED FLYING SYSTEM ---
+
+const config = {
+    // 1. BURSTING ELEMENTS (Balloons) - Full interaction
+    balloons: {
+        chars: ['🎈','🎈'],
+        hasSound: true,
+        hasBurst: true,
+        hasConfetti: true,
+        sound: sounds.balloonBurst
+    },
+    // 2. SOUND-ONLY ELEMENTS (Happy Emojis) - No burst, stays on screen
+    emojis: {
+        chars: ['😂', '🤩', '🥳', '🥰'],
+        sounds: {
+            '😂': sounds.laugh,
+            '🤩': sounds.wowEmoji,
+            '🥳': sounds.partyEmoji,
+            '🥰': sounds.loveEmoji
+        }
+    },
+    // 3. SILENT GHOST ELEMENTS (Flowers & Hearts) - No interaction at all
+    silent: {
+        chars: ['🌸','🌷','🌹','🌻','🌼','💐','💖']
+    }
+};
+
+function spawnFlyer() {
+    const rand = Math.random();
+    let category, char;
+
+    if (rand < 0.45) {
+        category = 'silent';
+        char = config.silent.chars[Math.floor(Math.random() * config.silent.chars.length)];
+    } else if (rand < 0.75) {
+        category = 'emojis';
+        char = config.emojis.chars[Math.floor(Math.random() * config.emojis.chars.length)];
+    } else {
+        category = 'balloons';
+        char = config.balloons.chars[0];
+    }
+
+    const f = document.createElement('div');
+    f.className = 'flyer';
+    if (category === 'silent') f.classList.add('flower-heart');
+    f.textContent = char;
+    f.style.left = Math.random() * 90 + 'vw';
+    f.style.top = '110vh';
+    document.getElementById('flying-zone').appendChild(f);
+
+    // Flight Path
+    gsap.to(f, {
+        y: '-120vh',
+        x: (Math.random() - 0.5) * 200,
+        rotation: Math.random() * 360,
+        duration: 8 + Math.random() * 5,
+        ease: "none",
+        onComplete: () => f.remove()
+    });
+
+    const handleInteraction = (e) => {
+        e.preventDefault();
+
+        if (category === 'balloons') {
+            // Balloon: Sound, Burst, Confetti, Vibration
+            if (navigator.vibrate) navigator.vibrate(60);
+            if (config.balloons.sound) {
+                config.balloons.sound.currentTime = 0;
+                config.balloons.sound.play();
+            }
+            confetti({
+                particleCount: 35,
+                spread: 50,
+                origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }
+            });
+            f.remove();
+        } 
+        else if (category === 'emojis') {
+            // Emoji: Sound Only (No Burst)
+            const sfx = config.emojis.sounds[char];
+            if (sfx) {
+                sfx.currentTime = 0;
+                sfx.play();
+            }
+            // Small visual "pulse" to show it was touched
+            gsap.to(f, { scale: 1.4, duration: 0.1, yoyo: true, repeat: 1 });
+        }
+        // Category 'silent' has no logic here, so flowers/hearts do nothing.
+    };
+
+    f.addEventListener('mousedown', handleInteraction);
+    f.addEventListener('touchstart', handleInteraction);
+}
+
+// Spawning interval
+setInterval(spawnFlyer, 1100);
+
+// --- ORIGINAL STORY LOGIC ---
 
 function playSfx(sfx) {
-    if (!sfx) return;
-    sfx.currentTime = 0;
-    sfx.play();
+    if (sfx) { sfx.currentTime = 0; sfx.play(); }
 }
 
 function nextStep(e) {
@@ -49,7 +150,6 @@ function nextStep(e) {
     } else if (step === 2) {
         playTransition(sounds.light, "There we go! 💡", "Open the Curtain ✨", "room_lit.jpg", () => {
             document.body.classList.add('lit-room');
-            document.getElementById('viewport').classList.add('lit-up');
         });
     } else if (step === 3) {
         playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg");
@@ -81,18 +181,14 @@ function nextStep(e) {
         playTransition(sounds.eating, "Yum! So sweet! 💖", "The Final Surprise 🎁", "eating_finished.jpg");
     } else if (step === 11) {
         playTransition(sounds.surprise, "One more thing for you...", "Open the Box 📦", "box_closed.jpg");
-    } 
-    // TROLL START
-    else if (step === 12) {
+    } else if (step === 12) {
         playTransition(sounds.empty, "Haha! It's empty! 😂", "Wait, I want a real gift! 🥺", "box_empty.png");
     } else if (step === 13) {
         playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closedd.png");
-    } 
-    // TROLL END
-    else if (step === 14) {
+    } else if (step === 14) {
         playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
-            actionBox.style.display = 'none'; 
-            smileBox.style.display = 'flex'; 
+            actionBox.style.display = 'none';
+            smileBox.style.display = 'flex';
             confetti({ particleCount: 200, spread: 100 });
         });
     }
@@ -105,9 +201,7 @@ function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
         topText.textContent = nextTopText;
         btnText.textContent = nextBtnText;
         setTimeout(() => {
-            gsap.to(media, { opacity: 1, duration: 1.0, onComplete: () => { 
-                if (callback) callback(); 
-            }});
+            gsap.to(media, { opacity: 1, duration: 1.0, onComplete: () => { if (callback) callback(); } });
         }, 50);
     }});
 }
@@ -132,7 +226,8 @@ function createFirecrackerEffect() {
     cracker.textContent=['🧨','✨','💥'][Math.floor(Math.random()*3)];
     document.body.appendChild(cracker);
     gsap.to(cracker, { x:(window.innerWidth/2)-x, y:(window.innerHeight/2)-y, rotation:720, duration:0.8, onComplete:()=>{
-        cracker.textContent='💥'; gsap.to(cracker,{scale:2, opacity:0, duration:0.3, onComplete:()=>cracker.remove()});
+        cracker.textContent='💥';
+        gsap.to(cracker,{scale:2, opacity:0, duration:0.3, onComplete:()=>cracker.remove()});
     }});
 }
 
