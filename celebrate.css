@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+/* --- Reset & Base --- */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    cursor: none; /* Keeps the custom heart cursor active */
+}
 
 body {
     height: 100vh;
@@ -10,6 +16,7 @@ body {
     transition: background 1.5s ease;
 }
 
+/* Room Lighting Transition */
 body.lit-room {
     background: linear-gradient(-45deg, #ffe6e6, #e6e6ff, #ffebf5);
     background-size: 400% 400%;
@@ -22,6 +29,33 @@ body.lit-room {
     100% { background-position: 0% 50%; }
 }
 
+/* --- Interactive Flying Overlay --- */
+#flying-zone {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100vw; 
+    height: 100vh;
+    pointer-events: none; /* Transparent to button clicks */
+    z-index: 100;
+}
+
+.flyer {
+    position: absolute;
+    font-size: 2.5rem;
+    pointer-events: auto; /* Makes items touchable */
+    cursor: pointer;
+    user-select: none;
+    will-change: transform;
+}
+
+/* Visual Glow for Flowers and Hearts (Ghost Elements) */
+.flower-heart {
+    filter: drop-shadow(0 0 8px rgba(255, 182, 193, 0.6));
+    opacity: 0.9;
+}
+
+/* --- Layout Structure --- */
 .app-container {
     height: 100vh;
     display: flex;
@@ -32,7 +66,7 @@ body.lit-room {
     z-index: 2;
 }
 
-h1 {
+header h1 {
     font-weight: 700;
     font-size: 1.8rem;
     color: #ff69b4;
@@ -42,6 +76,7 @@ h1 {
     padding: 0 20px;
 }
 
+/* Image Viewport */
 .media-viewport {
     width: 80vw;
     max-width: 340px;
@@ -54,7 +89,18 @@ h1 {
     will-change: opacity;
 }
 
-.media-viewport img { width: 100%; height: 100%; object-fit: cover; }
+.media-viewport img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/* --- Buttons & Controls --- */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
 .interactive-pill-button {
     background: #ff69b4;
@@ -65,20 +111,35 @@ h1 {
     justify-content: center;
     align-items: center;
     text-align: center;
+    color: white;
+    font-weight: bold;
     box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
     user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition: transform 0.1s active;
 }
 
-#main-btn-text, #final-wish {
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.1rem;
-    pointer-events: none;
+.interactive-pill-button:active {
+    transform: scale(0.96);
 }
 
-.final-hidden { display: none; }
-.custom-cursor { width: 30px; height: 30px; position: fixed; pointer-events: none; z-index: 9999; }
-.firecracker-particle { position: fixed; font-size: 28px; z-index: 1000; pointer-events: none; }
+.final-hidden { 
+    display: none; 
+}
+
+/* Custom Cursor */
+.custom-cursor { 
+    width: 30px; 
+    height: 30px; 
+    position: fixed; 
+    pointer-events: none; 
+    z-index: 9999; 
+}
+
+/* Firecracker Effects */
+.firecracker-particle { 
+    position: fixed; 
+    font-size: 28px; 
+    z-index: 1000; 
+    pointer-events: none; 
+}
