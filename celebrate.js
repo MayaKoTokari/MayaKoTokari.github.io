@@ -28,21 +28,47 @@ const sounds = {
     laugh: document.getElementById('sfx-laugh'),
     wowEmoji: document.getElementById('sfx-wow-emoji'),
     partyEmoji: document.getElementById('sfx-party-emoji'),
-    loveEmoji: document.getElementById('sfx-love-emoji')
+    loveEmoji: document.getElementById('sfx-love-emoji'),
+    // Affirmation Sounds
+    beautiful: document.getElementById('sfx-beautiful'),
+    enough: document.getElementById('sfx-enough'),
+    kind: document.getElementById('sfx-kind'),
+    doIt: document.getElementById('sfx-do-it'),
+    proud: document.getElementById('sfx-proud'),
+    trust: document.getElementById('sfx-trust'),
+    deserve: document.getElementById('sfx-deserve'),
+    strong: document.getElementById('sfx-strong')
 };
 
 sounds.piano.volume = 0.3;
 sounds.hbd.volume = 0.3;
 
-// --- REFINED SLOW FLYING SYSTEM ---
+// --- CONFIGURATION ---
 
 const config = {
     balloons: { chars: ['🎈'], sound: sounds.balloonBurst },
     emojis: {
         chars: ['😂', '🤩', '🥳', '🥰'],
-        sounds: { '😂': sounds.laugh, '🤩': sounds.wowEmoji, '🥳': sounds.partyEmoji, '🥰': sounds.loveEmoji }
+        sounds: { 
+            '😂': sounds.laugh, 
+            '🤩': sounds.wowEmoji, 
+            '🥳': sounds.partyEmoji, 
+            '🥰': sounds.loveEmoji 
+        }
     },
-    silent: { chars: ['🌸','🌹','🌼','💐','💖'] }
+    affirmations: {
+        chars: ['🌸', '🌹', '🌼', '💐', '💖', '🎉', '✨', '🦋'],
+        sounds: {
+            '💖': sounds.beautiful, // "You are beautiful"
+            '🌸': sounds.enough,    // "You are enough"
+            '🌹': sounds.kind,      // "You are kind"
+            '✨': sounds.doIt,      // "You can do it"
+            '🎉': sounds.proud,     // "I am proud of you"
+            '🌼': sounds.trust,     // "I trust you"
+            '💐': sounds.deserve,   // "You deserve the best"
+            '🦋': sounds.strong     // "You are so strong"
+        }
+    }
 };
 
 function spawnFlyer() {
@@ -50,8 +76,8 @@ function spawnFlyer() {
     let category, char;
 
     if (rand < 0.5) {
-        category = 'silent';
-        char = config.silent.chars[Math.floor(Math.random() * config.silent.chars.length)];
+        category = 'affirmations';
+        char = config.affirmations.chars[Math.floor(Math.random() * config.affirmations.chars.length)];
     } else if (rand < 0.8) {
         category = 'emojis';
         char = config.emojis.chars[Math.floor(Math.random() * config.emojis.chars.length)];
@@ -62,7 +88,7 @@ function spawnFlyer() {
 
     const f = document.createElement('div');
     f.className = 'flyer';
-    if (category === 'silent') f.classList.add('flower-heart');
+    if (category === 'affirmations') f.classList.add('flower-heart');
     f.textContent = char;
     f.style.left = Math.random() * 90 + 'vw';
     f.style.top = '110vh';
@@ -73,22 +99,47 @@ function spawnFlyer() {
         y: '-125vh',
         x: (Math.random() - 0.5) * 80,
         rotation: Math.random() * 180,
-        duration: 15 + Math.random() * 5, // Slow rise
+        duration: 15 + Math.random() * 5, 
         ease: "none",
         onComplete: () => f.remove()
     });
 
     const handleInteraction = (e) => {
         e.preventDefault();
+        
         if (category === 'balloons') {
             if (navigator.vibrate) navigator.vibrate(60);
-            if (config.balloons.sound) { config.balloons.sound.currentTime = 0; config.balloons.sound.play(); }
-            confetti({ particleCount: 30, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } });
+            if (config.balloons.sound) { 
+                config.balloons.sound.currentTime = 0; 
+                config.balloons.sound.play(); 
+            }
+            confetti({ 
+                particleCount: 30, 
+                origin: { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } 
+            });
             f.remove();
         } else if (category === 'emojis') {
             const sfx = config.emojis.sounds[char];
             if (sfx) { sfx.currentTime = 0; sfx.play(); }
-            gsap.to(f, { scale: 1.4, duration: 0.1, yoyo: true, repeat: 1 });
+            
+            // Disappear logic for emojis
+            gsap.to(f, { 
+                scale: 1.4, 
+                opacity: 0, 
+                duration: 0.2, 
+                onComplete: () => f.remove() 
+            });
+        } else if (category === 'affirmations') {
+            const sfx = config.affirmations.sounds[char];
+            if (sfx) { sfx.currentTime = 0; sfx.play(); }
+            
+            // Disappear logic for affirmations
+            gsap.to(f, { 
+                scale: 1.4, 
+                opacity: 0, 
+                duration: 0.2, 
+                onComplete: () => f.remove() 
+            });
         }
     };
 
@@ -96,10 +147,11 @@ function spawnFlyer() {
     f.addEventListener('touchstart', handleInteraction);
 }
 
-// Spawns every 3 seconds for a "small number" feel
+// Spawning interval
 setInterval(spawnFlyer, 3000);
 
 // --- STORY LOGIC ---
+
 function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
     if (sfx) { sfx.currentTime = 0; sfx.play(); }
     gsap.to(media, { opacity: 0, duration: 1.0, onComplete: () => {
