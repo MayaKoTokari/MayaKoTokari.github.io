@@ -90,7 +90,7 @@ function nextStep(e) {
     } 
     // TROLL END
     else if (step === 14) {
-        playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside_teddy.jpg", () => {
+        playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
             actionBox.style.display = 'none'; 
             smileBox.style.display = 'flex'; 
             confetti({ particleCount: 200, spread: 100 });
