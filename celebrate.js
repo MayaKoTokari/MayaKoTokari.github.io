@@ -202,8 +202,8 @@ function nextStep(e) {
     else if (step === 9) { playTransition(sounds.splat, "Oops! Messy birthday! 😂", "Let's eat! 🍰", "messy_face.jpg"); }
     else if (step === 10) { playTransition(sounds.eating, "Yum! So sweet! 💖", "The Final Surprise 🎁", "eating_finished.jpg"); }
     else if (step === 11) { playTransition(sounds.surprise, "One more thing for you...", "Open the Box 📦", "box_closed.jpg"); }
-    else if (step === 12) { playTransition(sounds.empty, "Haha! It's empty! 😂", "Wait, I want a real gift! 🥺", "box_empty.png"); }
-    else if (step === 13) { playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closedd.png"); }
+    else if (step === 12) { playTransition(sounds.empty, "Haha! It's empty! 😂", "Wait, I want a real gift! 🥺", "box_empty.webp"); }
+    else if (step === 13) { playTransition(sounds.teddy, "Fine, fine... check again! ✨", "Open it one last time 🧸", "box_closedd.webp"); }
     else if (step === 14) {
         playTransition(sounds.gift, "You're truly special! 💖", "", "gift_inside.jpg", () => {
             actionBox.style.display = 'none'; smileBox.style.display = 'flex';
