@@ -59,7 +59,7 @@ sounds.hbd.volume = 0.3;
 // --- CONFIGURATION ---
 
 const config = {
-    balloons: { chars: ['🎈', '🎈','🎈'], sound: sounds.balloonBurst },
+    balloons: { chars: ['🎈', '🎈'], sound: sounds.balloonBurst },
     emojis: {
         chars: ['😂', '🤩', '🥳', '🥰'],
         sounds: { 
