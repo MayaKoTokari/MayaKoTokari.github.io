@@ -180,7 +180,7 @@ function playTransition(sfx, nextTopText, nextBtnText, nextImg, callback) {
 function nextStep(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     step++;
-    if (step === 1) { sounds.piano.play(); playTransition(sounds.door, "Pitch black in here! 🌑", "Turn on Light 💡", "room_dark.jpg"); }
+    if (step === 1) { sounds.piano.play(); playTransition(sounds.door, "It's pitch dark in here! 🌑", "Turn on Light 💡", "room_dark.jpg"); }
     else if (step === 2) { playTransition(sounds.light, "There we go! 💡", "Open the Curtain ✨", "room_lit.jpg", () => document.body.classList.add('lit-room')); }
     else if (step === 3) { playTransition(sounds.curtain, "SURPRISE! 🥳", "Wear the Cap! 👑", "party_scene.jpg"); }
     else if (step === 4) { playTransition(sounds.cap, "You look wonderful! ❤️", "Bring Me Cake 🎂", "with_cap.jpg"); }
